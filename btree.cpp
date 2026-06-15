@@ -76,13 +76,18 @@ static TreeNode* rebalance(TreeNode* current)
 
 	int balance = treeHeight(current->left) - treeHeight(current->right);
 
-	if (balance > 1 || balance < -1) {
-		int leftBalance = treeHeight(current->left == NULL ? NULL : current->left->left)
-			- treeHeight(current->left == NULL ? NULL : current->left->right);
-		if (leftBalance < 0) {
+	if (balance > 1) {
+		if (treeHeight(current->left->left) < treeHeight(current->left->right)) {
 			current->left = rotateLeft(current->left);
 		}
 		return rotateRight(current);
+	}
+
+	if (balance < -1) {
+		if (treeHeight(current->right->right) < treeHeight(current->right->left)) {
+			current->right = rotateRight(current->right);
+		}
+		return rotateLeft(current);
 	}
 
 	return current;
@@ -150,7 +155,7 @@ bool remove(TreeNode*& current, const string& data, int option) {
 				removed = remove(current->right, data, option);
 			}
 		} else {
-			Word probe;
+			Word probe = Word();
 			probe.word = data;
 			if (compareBySize(&probe, current->data) < 0) {
 				removed = remove(current->left, data, option);

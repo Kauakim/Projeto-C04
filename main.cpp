@@ -47,24 +47,33 @@ void insertWordsFile(Dictionary& dictionary)
         Word word;
 
         while (getline(file_words, lineWords)) {
+            if (lineWords.empty()) {
+                continue;
+            }
             if(aux == 0){
                 word = Word();
                 word.word = lineWords;
-                cout << endl << "Word: " << word.word << endl;
+                //cout << endl << "Word: " << word.word << endl;
             }
             if(aux == 1){
                 word.translations = parseTranslations(lineWords);
-                cout << "Translations: ";
-                printTranslations(word.translations);
-                cout << endl;
+                //cout << "Translations: ";
+                //printTranslations(word.translations);
+                //cout << endl;
             }
             if(aux == 2){
                 stringstream ss(lineWords);
                 ss >> word.coordinates.x >> word.coordinates.y >> word.coordinates.z;
 
-                cout << "X: " << word.coordinates.x << endl;
-                cout << "Y: " << word.coordinates.y << endl;
-                cout << "Z: " << word.coordinates.z << endl;
+                if (ss.fail()) {
+                    cerr << "Invalid coordinates for word: " << word.word << endl;
+                    aux = 0;
+                    continue;
+                }
+
+                //cout << "X: " << word.coordinates.x << endl;
+                //cout << "Y: " << word.coordinates.y << endl;
+                //cout << "Z: " << word.coordinates.z << endl;
 
                 if (findWordPointer(word.word, dictionary) != NULL) {
                     cout << "Word already exists, skipping: " << word.word << endl;
@@ -97,17 +106,19 @@ void insertEdgesFile(Dictionary& dictionary){
         int aux = 0;
         Edge edge;
         while (getline(file_edges, lineEdges)) {
+            if (lineEdges.empty()) {
+                continue;
+            }
             if(aux == 0){
                 edge = Edge();
                 edge.source = findWordPointer(lineEdges, dictionary);
 
                 if (edge.source == NULL) {
                     cerr << "\nSource word not found: " << lineEdges << endl;
-                    aux = 0;
                     continue;
                 }
-            }
-            if(aux == 1){
+                aux = 1;
+            } else {
                 edge.target = findWordPointer(lineEdges, dictionary);
 
                 if (edge.target == NULL) {
@@ -122,21 +133,23 @@ void insertEdgesFile(Dictionary& dictionary){
                     continue;
                 }
 
+                bool alreadyExists = false;
                 for (list<Edge>::iterator it = dictionary.edges.begin(); it != dictionary.edges.end(); it++) {
                     if (it->source == edge.source && it->target == edge.target || 
                         it->source == edge.target && it->target == edge.source) {
                         cout << "Edge already exists between \"" << edge.source->word << "\" and \"" << edge.target->word << "\", skipping." << endl;
-                        aux = 0;
+                        alreadyExists = true;
                         break;
                     }
                 }
 
-                edge.similarity = calculateSimilarity(*edge.source, *edge.target);
+                if (!alreadyExists) {
+                    edge.similarity = calculateSimilarity(*edge.source, *edge.target);
+                    dictionary.edges.push_back(edge);
+                }
 
-                dictionary.edges.push_back(edge);
+                aux = 0;
             }
-
-            aux = (aux + 1) % 2;
         }
         file_edges.close();
     } else {
@@ -347,7 +360,7 @@ void synonyms(Dictionary& dictionary)
     list<Word*> synonymsList;
     
     for (list<Edge>::iterator it = dictionary.edges.begin(); it != dictionary.edges.end(); it++) {
-        if (it->similarity > 70.0) {
+        if (it->similarity > 30.0) {
             if (it->source == foundWord) {
                 synonymsList.push_back(it->target);
             }
@@ -552,10 +565,7 @@ int main()
                 buildAndDisplayCompleteGraph(dictionary);
                 break;
             case 13: {
-                double perim = convexHullPerimeter(dictionary);
-                if (perim > 0.0) {
-                    cout << "Perimeter: " << fixed << setprecision(2) << perim << endl;
-                }
+                convexHullPerimeter(dictionary);
                 break;
             }
         }

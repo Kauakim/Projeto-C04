@@ -1,3 +1,3 @@
 all:
-	@g++ main.cpp btree.cpp extra.cpp graphs.cpp -o code
+	@g++ main.cpp btree.cpp extra.cpp graphs.cpp plots.cpp -o code
 	@./code

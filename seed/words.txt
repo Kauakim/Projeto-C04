@@ -1,6 +1,123 @@
-Example1
-Exemplo1
-0 0 0
-Example2
-Exemplo2
-0 0 0
+apple
+maca
+1 5 10
+book
+livro, reservar, caderno
+2 4 35
+cat
+gato, felino
+3 3 4
+dog
+cachorro, cao
+4 3 4
+elephant
+elefante
+5 8 5
+flower
+flor
+6 6 10
+green
+verde, eco, novato
+7 5 55
+house
+casa, moradia, lar
+8 5 30
+ice
+gelo
+9 3 20
+jump
+pular, saltar
+10 4 40
+key
+chave, tecla, essencial
+11 3 30
+lion
+leao
+12 4 5
+moon
+lua
+13 4 25
+night
+noite
+14 5 25
+ocean
+oceano
+15 5 15
+pencil
+lapis
+16 6 35
+queen
+rainha, dama
+17 5 50
+rain
+chuva
+18 4 20
+sun
+sol
+19 3 25
+tree
+arvore
+20 4 10
+umbrella
+guarda-chuva, sombrinha
+21 8 30
+village
+vilarejo, vila, aldeia
+22 7 15
+water
+agua, aguar, regar
+23 5 20
+window
+janela, vitrine, guiche
+23 6 30
+yellow
+amarelo, covarde
+25 6 55
+zero
+zero
+26 4 50
+bird
+passaro, ave
+2 4 4
+mountain
+montanha, monte, serra
+13 8 15
+river
+rio
+18 5 15
+star
+estrela, astro, famoso
+19 4 25
+cloud
+nuvem
+3 5 20
+light
+luz, claro, leve, acender
+12 5 25
+play
+jogar, tocar, brincar
+16 4 40
+run
+correr, funcionar, administrar
+18 3 40
+set
+conjunto, definir, colocar, cenario
+19 3 40
+face
+rosto, enfrentar, lado
+6 4 45
+hand
+mao, entregar, ponteiro
+8 4 45
+time
+tempo, hora, vez
+20 4 50
+love
+amor, amar, gostar
+12 4 45
+great
+otimo, grande, excelente
+7 5 50
+think
+pensar, achar, refletir
+20 5 35
